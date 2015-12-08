@@ -63,7 +63,7 @@ public class ImageArrayAdapter extends ArrayAdapter<ImageDisplay> {
                     shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
                     shareIntent.setType("image/*");
                     // Launch sharing dialog for image
-                    v.getContext().startActivity(shareIntent);
+                    v.getContext().startActivity(Intent.createChooser(shareIntent,"Share Via"));
                     return true;
                 } else {
                     return false;
