@@ -38,7 +38,7 @@ The following **extra** functionality is completed:
 
 * [x] Add pull-to-refresh for popular stream using **SwipeRefreshLayout**
 * [x] Displayed a nice default placeholder graphic for each image during loading
-* [x] Long Press and Share images to other applications.
+* [x] Long Press on image and Share images to other applications.
 
 ## Video Walkthrough 
 
