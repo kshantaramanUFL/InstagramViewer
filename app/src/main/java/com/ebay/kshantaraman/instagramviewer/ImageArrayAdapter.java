@@ -51,7 +51,26 @@ public class ImageArrayAdapter extends ArrayAdapter<ImageDisplay> {
         captionTextView.setText(currentImage.getCaption());
         userNameTextView.setText(currentImage.getUsername());
         String imageUri = "https://i.imgur.com/tGbaZCY.jpg";
-
+        imgView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ImageView imgView = (ImageView) v.findViewById(R.id.imageView);
+                Uri bmpUri = getLocalBitmapUri(imgView);
+                if (bmpUri != null) {
+                    // Construct a ShareIntent with link to image
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+                    shareIntent.setType("image/*");
+                    // Launch sharing dialog for image
+                    v.getContext().startActivity(shareIntent);
+                    return true;
+                } else {
+                    return false;
+                    // ...sharing failed, handle error
+                }
+            }
+        });
         Picasso.with(ctxt).load(currentImage.getImageUrl()).placeholder(R.drawable.loading).into(imgView);
         //Picasso.with(context).load(imageUri).into(ivBasicImage);
         //imgView.setImageResource(currentImage.getResourceID());
@@ -59,21 +78,8 @@ public class ImageArrayAdapter extends ArrayAdapter<ImageDisplay> {
 
     }
 
-    public void OnShareItem(View v){
-        ImageView imgView= (ImageView) v.findViewById(R.id.imageView);
-        Uri bmpUri = getLocalBitmapUri(imgView);
-        if (bmpUri != null) {
-            // Construct a ShareIntent with link to image
-            Intent shareIntent = new Intent();
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-            shareIntent.setType("image/*");
-            // Launch sharing dialog for image
-            //startActivity(Intent.createChooser(shareIntent, "Share Image"));
-        } else {
-            // ...sharing failed, handle error
-        }
-    }
+
+
 
     public Uri getLocalBitmapUri(ImageView imageView) {
         // Extract Bitmap from ImageView drawable
